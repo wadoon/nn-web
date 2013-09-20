@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <title>Grid-Test</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">  
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+  <script type="text/javascript" src="rng.js"></script>  
+  <script src="grid.js"></script>
+  
+  <style type="text/css">
+      canvas { border: 1px solid black; }
+      
+      input  {width:50px;}
+      
+      a {
+	cursor:pointer;
+	color:blue;
+	font-weight: 100;
+      }
+      
+      a.selected {
+	font-weight: 900;
+	text-decoration:underline;
+      }
+      
+      
+      #class0 { background: red ;}
+      #class1 { background: blue;}
+      #class2 { background: green ;}
+      #class3 { background: orange ;}
+      #class4 { background: pink ;}
+      
+      
+      .bigparen {font-size:32pt; font-weight:100; vertical-align:middle; margin:0;}
+  </style>    
+</head>
+<body>
+  <h1>Grid - Test</h1>
+
+  
+  <canvas id="frame" width="800" height="800">
+    Fallback!
+  </canvas>
+  
+  
+  <div>
+    <h2>Modify current data</h2>
+    
+    <a href="#" onclick="resetData()">clear current data</a>
+    
+    
+    <b>Select  Class:</b>
+      <a id="class0" class="classes" onclick="setClass(0)">A</a> – 
+      <a id="class1" class="classes" onclick="setClass(1)">B</a> – 
+      <a id="class2" class="classes" onclick="setClass(2)">C</a> – 
+      <a id="class3" class="classes" onclick="setClass(3)">D</a> – 
+      <a id="class4" class="classes" onclick="setClass(4)">E</a>
+    <br>
+    
+    <b>Add random data cluster:</b>
+    <br>
+      <table>
+	<tr>
+	  <td># of data points:</td>
+	  <td><input type="number" id="amount" /></td>
+	</tr>
+	<tr>
+	  <td>&mu; = </td>
+	  <td>(<input type="number" id="mu_x" />,<input type="number" id="mu_y" />)</td>
+	</tr>
+	<tr>
+	  <td>Cov  = </td><td>	  
+	  
+	  <table>
+	      <tr>
+		<td rowspan="2">
+		<span class="bigparen">(</span>	  	  
+		</td>
+	      
+		<td><input type="number" id="var_x" /></td>
+		<td><input type="number" id="a" /></td>
+		
+		<td rowspan="2">
+		<span class="bigparen">)</span>	  	  
+		</td>
+		
+	      </tr>
+	      <tr>
+		<td><input type="number"  id="b" /></td>
+		<td><input type="number" id="var_y" /></td>
+	      </tr>
+	     </table>        
+	     </td>
+	     </tr>	 
+	     <tr>
+		<td></td>
+		<td><button onclick="addCluster()">add cluster</button></td>
+	      </tr>
+	</table>   
+       <i>Note: the covariance is not correct, due to a lack of a multivariate statistik library for javascript</i><br>
+       
+       <hr>
+       <h2>K nearest neighbour classificator</h2>
+       k = <input type="number" id="K_NN" onchange="K_NN = int($(this).val())">        
+       – <button onclick="classifyRegion()">Classify region</button>       –
+       <button onclick="resetClassifyRegion()">Reset classification</button>       
+       
+       <hr>
+       <h2>K mean clustering</h2>
+       k = <input type="number" id="K_CLUSTER" onchange="K_CLUSTER = int($(this).val())">        
+       – <button onclick="classifyRegion()">Cluster</button>       –
+       <button onclick="resetClassifyRegion()">Reset cluster</button>       
+       
+  </div>
+  
+ 
+  <script>
+	  window.onload = main;	  	 
+  </script>
+</body>
+</html>
