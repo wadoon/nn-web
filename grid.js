@@ -369,7 +369,7 @@ function  cluster() {
 
 }
 
-function zeros(k1, k2 = 1) {
+function zeros(k1, k2) {
 		if(k2 == 1) {
 				return initCluster(k1, function() {return 0;});
 		}
