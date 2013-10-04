@@ -2,12 +2,8 @@
 
 <html lang="en">
   <head>
-    <title>Grid-Test</title>
+    <title></title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-    <script type="text/javascript" src="rng.js"></script>
-    <script type="text/javascript" src="rhill-voronoi-core.min.js"></script>
-    <script src="grid.js"></script>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
 
@@ -17,121 +13,6 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
-    </script>
-    <script type="text/javascript"
-            src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-    </script>
-
-
-    <style type="text/css">
-      canvas {
-      border: 1px solid black;
-      }
-
-      a {
-      cursor:pointer;
-      color:blue;
-      font-weight: 100;
-      }
-
-
-      a.classes  {
-      color:white;
-      }
-
-      a.selected {
-      font-weight: 900;
-      text-decoration:underline;
-      border: 2px solid black;
-      }
-
-      .bigparen {font-size:32pt; font-weight:100; vertical-align:middle; margin:0;}
-
-
-      /* Space out content a bit */
-      body {
-      padding-top: 20px;
-      padding-bottom: 20px;
-      }
-
-      /* Everything but the jumbotron gets side spacing for mobile first views */
-      .header,
-      .marketing,
-      .footer {
-      padding-left: 15px;
-      padding-right: 15px;
-      }
-
-      /* Custom page header */
-      .header {
-      border-bottom: 1px solid #e5e5e5;
-      }
-      /* Make the masthead heading the same height as the navigation */
-      .header h3 {
-      margin-top: 0;
-      margin-bottom: 0;
-      line-height: 40px;
-      padding-bottom: 19px;
-      }
-
-      /* Custom page footer */
-      .footer {
-      padding-top: 19px;
-      color: #777;
-      border-top: 1px solid #e5e5e5;
-      }
-
-      /* Customize container */
-      @media (min-width: 768px) {
-      .container {
-      max-width: 730px;
-      }
-      }
-      .container-narrow > hr {
-      margin: 30px 0;
-      }
-
-      /* Main marketing message and sign up button */
-      .jumbotron {
-      text-align: center;
-      border-bottom: 1px solid #e5e5e5;
-      }
-      .jumbotron .btn {
-      font-size: 21px;
-      padding: 14px 24px;
-      }
-
-      /* Supporting marketing content */
-      .marketing {
-      margin: 40px 0;
-      }
-      .marketing p + h4 {
-      margin-top: 28px;
-      }
-
-      /* Responsive: Portrait tablets and up */
-      @media screen and (min-width: 768px) {
-      /* Remove the padding we set earlier */
-      .header,
-      .marketing,
-      .footer {
-      padding-left: 0;
-      padding-right: 0;
-      }
-      /* Space out the masthead */
-      .header {
-      margin-bottom: 30px;
-      }
-      /* Remove the bottom border on the jumbotron for visual effect */
-      .jumbotron {
-      border-bottom: 0;
-      }
-      }
-
-
-    </style>
   </head>
   <body>
     <div class="container">
@@ -142,177 +23,20 @@
         </ul>
         <h3 class="text-muted">Clustering and Classification</h3>
       </div>
-  
-
-
-      <!-- <div class="jumbotron">
+      <div class="jumbotron">
            <h1>Jumbotron heading</h1>
            <p class="lead"></p>
 
-           <canvas id="frame" width="800" height="800">
-             Fallback!
-           </canvas>
-
-      </div>-->
-
-      <canvas id="frame" width="700" height="700">
-        Fallback!
-      </canvas>
-
-
+      </div>
 
       <div class="marketing row">
-        <div class="alert alert-info alert-dismissable">
-          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-          <a href="#" class="alert-link">...</a>
-        </div>
 
         <div class="col-sm-6">
-          <h3>Modify current data</h3>
-
-          <div class="form-group">
-            <label>Select  Class:</label>
-            <div class="btn-group">
-              <a id="class0" class="btn classes" onclick="setClass(0)">A</a>
-              <a id="class1" class="btn classes" onclick="setClass(1)">B</a>
-              <a id="class2" class="btn classes" onclick="setClass(2)">C</a>
-              <a id="class3" class="btn classes" onclick="setClass(3)">D</a>
-              <a id="class4" class="btn classes" onclick="setClass(4)">E</a>
-            </div>
-          </div>
-
-
-          <button class="btn" onclick="clearData()">clear current data</button>
         </div>
-
-
-        <div class="col-sm-6 panel-group" id="accordion">
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h4 class="panel-title">
-                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                  Add random data cluster</a>
-              </h4>
-            </div>
-            <div id="collapseOne" class="panel-collapse collapse in">
-              <div class="panel-body">
-
-
-                <div class="form-group">
-                  <label># of data points:</label>
-                  <input type="number" id="amount" class="form-control" />
-                </div>
-
-                <div class="form-group">
-                  <label>&mu; = (x,y)<sup>T</sup> = </label>
-                  <table><tr><td>
-                        <input type="number" id="mu_x"class="form-control"   />
-                      </td><td>,</td><td>
-                        <input type="number" id="mu_y"class="form-control"  /></td></tr></table>
-                </div>
-
-
-                <div class="form-group">
-                  <label>Cov =</label>
-                  <table>
-                    <tr>
-                      <td rowspan="2">
-                        <span class="bigparen">(</span>
-                      </td>
-
-                      <td><input type="number" id="var_x"class="form-control"   /></td>
-                      <td><input type="number" id="a" class="form-control" /></td>
-
-                      <td rowspan="2">
-                        <span class="bigparen">)</span>
-                      </td>
-
-                    </tr>
-                    <tr>
-                      <td><input type="number"  id="b" class="form-control"  /></td>
-                      <td><input type="number" id="var_y" class="form-control"  /></td>
-                    </tr>
-                  </table>
-                </div>
-
-                <i>Note: the covariance is not correct, due to a lack of a multivariate
-                  statistik library for javascript
-
-                  The correlation is reached like this:
-
-                  $$ Cov = \begin{pmatrix} \sigma_x& a\\ b & \sigma_y \end{pmatrix}$$
-
-                  $$X' = \mu_x + \sigma_x ( aX + (1-a) Y) $$
-                  $$Y' = \mu_y + \sigma_y ( bY + (1-b) X) $$
-
-
-                  where $X,Y \sim N(0,1)$
-
-                </i><br>
-                <button class="btn btn-default" onclick="addCluster()">Add Cluster</button>
-
-              </div>
-            </div>
-          </div>
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h4 class="panel-title">
-                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-                  K nearest neighbour classificator
-                </a>
-              </h4>
-            </div>
-            <div id="collapseTwo" class="panel-collapse collapse">
-              <div class="panel-body">
-                <div class="form-group">
-                  <label>k = </label>
-                  <input class="form-control"
-                         type="number" id="K_NN"
-                         onchange="K_NN = int($(this).val())" />
-                </div>
-                <div class="btn-group">
-                  <button  class="btn btn-primary" onclick="classifyRegion()">Classify region</button>
-                  <button   class="btn btn-warning" onclick="resetClassifyRegion()">Reset classification</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h4 class="panel-title">
-                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseThird">
-                  K mean clustering
-                </a>
-              </h4>
-            </div>
-            <div id="collapseThird" class="panel-collapse collapse">
-              <div class="panel-body">
-                <div class="form-group">
-                  <label>k=</label>
-                  <input class="form-control"
-                         type="number" id="K_CLUSTER"
-                         onchange="K_CLUSTER = int($(this).val())" />
-                </div>
-                <div class="form-group">
-                  <label>#rnd = </label>
-                  <input class="form-control"
-                         type="number" id="ROUNDS_CLUSTER"
-                         onchange="ROUNDS_CLUSTER = int($(this).val())" />
-                </div>
-                <div class="btn-group">
-                  <button class="btn btn-primary" onclick="cluster()">Cluster</button>
-                  <button class="btn btn-warning" onclick="resetCluster()">Reset cluster</button>
-                </div>
-              </div>
-            </div>
-          </div>
+        <div class="col-sm-6">
         </div>
-        <button type="button" class="close" aria-hidden="true">&times;</button>
-        <script>
-          window.onload = main;
-          writeClassCss();
-        </script>
       </div>
+
 
       <!-- Modal -->
       <div class="modal fade" id="about" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -323,13 +47,13 @@
               <h4 class="modal-title">About</h4>
             </div>
             <div class="modal-body">
-							<p>
-								Alexander Weigl &dash; 2013 &dash; gpl-v3
-							</p>
-							<p>
-							<a href="http://github.com/areku/nn-web">Source and Informations</a>							
-							<p>
-							TODO: some text here...
+	      <p>
+		Alexander Weigl &dash; 2013 &dash; gpl-v3
+	      </p>
+	      <p>
+		<a href="http://github.com/areku/nn-web">Source and Informations</a>
+	      <p>
+		TODO: some text here...
 
             </div>
             <div class="modal-footer">
