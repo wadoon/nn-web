@@ -1,34 +1,33 @@
 <!DOCTYPE HTML>
 <html>
-  <head>  
+  <head>
+    <title>Perzeptron and Multi-Layer Perzeptron</title>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
     <script src="http://d3lp1msu2r81bx.cloudfront.net/kjs/js/lib/kinetic-v4.7.2.min.js"></script>
-	<script src="http://cdnjs.cloudflare.com/ajax/libs/Chart.js/0.2.0/Chart.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/Chart.js/0.2.0/Chart.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery.ui.all.css" />
     <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
 
-<!-- Optional theme -->
-<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css">
 
-<!-- Latest compiled and minified JavaScript -->
-<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 
     <style>
-      
-
       /* Space out content a bit */
       body {
       padding-top: 20px;
       padding-bottom: 20px;
       }
-	  
+
       canvas {
         border: 1px solid red !important;
 
       }
-	  
+
 	   /* Custom page header */
       .header {
       border-bottom: 1px solid #e5e5e5;
@@ -47,65 +46,70 @@
       color: #777;
       border-top: 1px solid #e5e5e5;
       }
-     
+
     </style>
   </head>
   <body>
-	<div class="container">
-		<div class="header">
-			<ul class="nav nav-pills pull-right">
-			  <li class="active"><a href="#">Home</a></li>
-			  <li><a href="#about" data-toggle="modal" class="">About</a></li>
-			</ul>
-			<h3 class="text-muted">Clustering and Classification</h3>
-		</div>
-	  
-	  
-    <div id="canvas"></div>
-    
-	
-	 <div class="marketing row">
+    <div class="container">
+      <div class="header">
+	<ul class="nav nav-pills pull-right">
+	  <li class="active"><a href="#">Home</a></li>
+	  <li><a href="#about" data-toggle="modal" class="">About</a></li>
+	</ul>
+        <h3 class="text-muted">Perzeptron and Multi-Layer Perzeptron</h3>
+      </div>
+
+
+      <div id="canvas"></div>
+
+
+      <div class="marketing row">
         <div class="alert alert-info alert-dismissable">
           <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
           <a href="#" class="alert-link">...</a>
         </div>
-	
+
 	<div class="col-sm-6">
           <h3>Perzeptron</h3>
-        <div class="form-group">
-			<label>weights(b, w1, w2) = </label>			
-			(<input id="b" value = "1" class="form-control" />, <input id="w1" value = "1" class="form-control" />, <input id="w2" value = "1"  class="form-control"/>)
-		</div>
-		
-		<div class="form-group">
-		<label>Layer visibility:</label> 
-		<div class="slider" id="perzeptronslider"></div>
-		</div>
-		<button class="btn btn-primary" onclick="startPerzeptron()">start</button>
-     </div>
-    
-	<div class="col-sm-6">
-     <h3>MLP</h3>
-	  
+          <div class="form-group">
+	    <label>weights(b, w1, w2) = </label>
+	    (<input id="b" value = "1" class="form-control" />, <input id="w1" value = "1" class="form-control" />, <input id="w2" value = "1"  class="form-control"/>)
+	  </div>
+
 	  <div class="form-group">
-                  <label>epochs:</label>
-				  <input id="epochs" value = "1" class="form-control" />
-		</div>
-      
-		<div class="form-group">
-		<label>Layer visibility:</label> <div class="slider" id="mlpslider"></div>
-		</div>
-		<button onclick="startMLP()" class="btn btn-primary">MLP Start</button>
-    </div>
-	
-	</div>
-	
-	<div>
-      <canvas id="myChart"  width="750" height="400"></canvas>
-    </div>
- 
-		
-	    <!-- Modal -->
+	    <label>Layer visibility:</label>
+	    <div class="slider" id="perzeptronslider"></div>
+	  </div>
+	  <button class="btn btn-primary" onclick="startPerzeptron()">Start Perzeptron</button>
+        </div>
+
+	<div class="col-sm-6">
+          <h3>MLP</h3>
+
+	  <div class="form-group">
+            <label>epochs:</label>
+	    <input id="epochs" value="1" class="form-control" />
+	  </div>
+
+	  <div class="form-group">
+            <label>#hidden neurons:</label>
+	    <input id="hiddenNeurons" value="3" class="form-control" />
+	  </div>
+
+	  <div class="form-group">
+	    <label>Layer visibility:</label> <div class="slider" id="mlpslider"></div>
+	  </div>
+	  <button onclick="startMLP()" class="btn btn-primary">MLP Start</button>
+        </div>
+
+      </div>
+
+      <div>
+        <canvas id="myChart"  width="750" height="400"></canvas>
+      </div>
+
+
+      <!-- Modal -->
       <div class="modal fade" id="about" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -114,14 +118,15 @@
               <h4 class="modal-title">About</h4>
             </div>
             <div class="modal-body">
-							<p>
-								Alexander Weigl &dash; 2013 &dash; gpl-v3
-							</p>
-							<p>
-							<a href="http://github.com/areku/nn-web">Source and Informations</a>							
-							<p>
-							TODO: some text here...
-
+	      <p>
+		Alexander Weigl &dash; 2013 &dash; gpl-v3
+	      </p>
+	      <p>
+		<a href="http://github.com/areku/nn-web">Source and Informations</a>
+              </p>
+	      <p>
+		TODO: some text here...
+              </p>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
@@ -136,14 +141,14 @@
           Alexander Weigl
         </footer>
       </div>
-	
-	</div>
-    	
+
+    </div>
+
     <script src="rng.js"></script>
     <script src="perzeptron.class.js"></script>
     <script src="mlp.class.js"></script>
 
-    <script defer="defer">
+    <script type="text/javascript" defer="defer">
       const W = 730;
       const H = 730;
 
@@ -156,22 +161,21 @@
       const POINT_SIZE = 1;
 
       const OPTIONS_POSTIVE_DATA_POINT = {
-            radius: POINT_SIZE,
-            fill: 'green',
-            stroke: 'black',
-            strokeWidth: 0.1
+          radius: POINT_SIZE,
+          fill: 'green',
+          stroke: 'black',
+          strokeWidth: 0.1
+      };
+
+      const OPTIONS_NEGATIVE_DATA_POINT = {
+          radius: POINT_SIZE,
+          fill: 'red',
+          stroke: 'black',
+          strokeWidth: 0.1
       };
 
 
-      const OPTIONS_NEGATIVE_DATA_POINT = {        
-            radius: POINT_SIZE,
-            fill: 'red',
-            stroke: 'black',
-            strokeWidth: 0.1
-      };
-
-
-      const OPTIONS_PERZEPTRON_LAST = {        
+      const OPTIONS_PERZEPTRON_LAST = {
           //  stroke: 'rgba(255,127,0,0.5)',
             strokeWidth: 0.3
       };
@@ -180,7 +184,7 @@
       var stage = new Kinetic.Stage({
         container: 'canvas',
         width: W,
-        height: H, 
+        height: H,
 
         scaleX:   H / numOfQuantsX,
         scaleY: - W / numOfQuantsY,
@@ -207,7 +211,7 @@
 
         for(var i  = MIN_X;  i <= MAX_X; i += 10) {
           var lineX = new Kinetic.Line({
-            points: [ MIN_X, i, MAX_X, i],                        
+            points: [ MIN_X, i, MAX_X, i],
               stroke: 'black',
               strokeWidth: 0.1
           });
@@ -217,12 +221,12 @@
 
         for(var i  = MIN_Y;  i <= MAX_Y; i += 10) {
           var lineY = new Kinetic.Line({
-            points: [i, MIN_Y, i, MAX_Y],            
+            points: [i, MIN_Y, i, MAX_Y],
             stroke: 'black',
             strokeWidth: 0.1
           });
-          
-          lineLayer.add(lineY);          
+
+          lineLayer.add(lineY);
         }
 
 
@@ -250,7 +254,7 @@
       function transformPoint(x, y) {
 
         var u = (x) / stage.getScaleX() +  stage.getOffsetX();
-        var v = (y) / stage.getScaleY() + stage.getOffsetY(); 
+        var v = (y) / stage.getScaleY() + stage.getOffsetY();
 
        // console.log(x,y, "=", u,v);
 
@@ -260,18 +264,18 @@
       var data = [];
       var pointLayer = new Kinetic.Layer();
 
-      function addDataPoint(x,y,c) {          
-          
+      function addDataPoint(x,y,c) {
+
           if(c < 0) {
-            
+
             var circle = new Kinetic.Circle(
               copyInto( OPTIONS_NEGATIVE_DATA_POINT, {fill: '#cccccc', x: -x, y: -y}));
           //  pointLayer.add(circle);
           } else {
-            
+
           }
           data.push([x,y,c]);
-          
+
           var options = c >= 0 ? OPTIONS_POSTIVE_DATA_POINT: OPTIONS_NEGATIVE_DATA_POINT;
           var circle = new Kinetic.Circle(
             copyInto(options, {x: x, y: y}));
@@ -302,22 +306,22 @@
 			//console.log(evt);
           var p = transformPoint( evt.layerX ,  evt.layerY);
           var clazz = evt.button == 0 ? 1 : -1;
-          addDataPoint( p.x , p.y, clazz);          
+          addDataPoint( p.x , p.y, clazz);
         });
 
         return pointLayer;
       }
 
-      
-      // add the layer to the stage      
+
+      // add the layer to the stage
       stage.add(createLineLayer());
       stage.add(createClickLayer());
       stage.add(pointLayer);
 
 
 
-      $('body').on('contextmenu', 'canvas', function(e){ return false; });      
-      
+      $('body').on('contextmenu', 'canvas', function(e){ return false; });
+
       //addDataPoint(50,50, 1);
       //addDataPoint(50,-50, -1);
 
@@ -340,10 +344,10 @@
 				strokeColor : "rgba(220,220,220,1)",
 				pointColor : "rgba(220,220,220,1)",
 				pointStrokeColor : "#fff",
-				data : values		
+				data : values
 			}]
 		};
-	  	  
+
 		var ctx = document.getElementById("myChart").getContext("2d");
 		var myNewChart = new Chart(ctx).Line(data);
 	}
@@ -358,37 +362,40 @@
           console.log("error: #"+i, e);
           if( e == 0) {
             break;
-          }          
+          }
         }
-        
+
 
         pl.remove();
 		var opacity = pl.getOpacity();
-		
+
         pl = p.draw(OPTIONS_PERZEPTRON_LAST);
 		pl.setOpacity(opacity);
 
         stage.add(pl);
         pl.draw();
-        stage.draw();    
-		
+        stage.draw();
+
 		plotDataLine(p.errorHistory);
       }
 
      $(function() {
-      $( ".slider" ).slider({});
-	  
-	  $('#mlpslider').on("slidechange", function(evt, ui) {
-			mlpLayer.setOpacity(ui.value/100.0);
-			mlpLayer.draw();
-	  });
-	  
-	  
-	  $('#perzeptronslider').on("slidechange", function(evt, ui) {
-			pl.setOpacity(ui.value/100.0);
-			pl.draw();
-	  });	  	 
+         $( ".slider" ).slider({value: 25});
+
+         mlpLayer.setOpacity(0.25);
+         pl.setOpacity(0.25);
+
+         $('#mlpslider').on("slidechange", function(evt, ui) {
+             mlpLayer.setOpacity(ui.value/100.0);
+             mlpLayer.draw();
+         });
+
+
+         $('#perzeptronslider').on("slidechange", function(evt, ui) {
+             pl.setOpacity(ui.value/100.0);
+             pl.draw();
+         });
      });
-    </script>	
+    </script>
   </body>
 </html>

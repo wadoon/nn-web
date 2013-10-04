@@ -12,22 +12,22 @@ var canvas = undefined;
 var ctx = undefined;
 
 var classColor = [
-		'hsla(25,100%,50%,0.8)', 
-		'hsla(90,100%,50%,0.8)', 
-		'hsla(180,100%,50%,0.8)', 
-		'hsla(260,100%,50%,0.8)', 
-		'hsla(320,100%,50%,0.8)', 
+    'hsla(25,100%,50%,0.8)',
+    'hsla(90,100%,50%,0.8)',
+    'hsla(180,100%,50%,0.8)',
+    'hsla(260,100%,50%,0.8)',
+    'hsla(320,100%,50%,0.8)',
 ];
 
 
 var clusterColor = [
-		'hsla(50,100%,50%,0.8)', 
-		'hsla(200,100%,50%,0.8)', 
-		'hsla(300,100%,50%,0.8)', 
-		'hsla(100,100%,50%,0.8)', 
-		'hsla(150,100%,50%,0.8)', 
-		'hsla(250,100%,50%,0.8)', 
-		'hsla(350,100%,50%,0.8)', 
+    'hsla(50,100%,50%,0.8)',
+    'hsla(200,100%,50%,0.8)',
+    'hsla(300,100%,50%,0.8)',
+    'hsla(100,100%,50%,0.8)',
+    'hsla(150,100%,50%,0.8)',
+    'hsla(250,100%,50%,0.8)',
+    'hsla(350,100%,50%,0.8)',
 ];
 
 var data = [ [], [], [], [], [] ];
@@ -292,7 +292,7 @@ function main() {
     generateDataForCluster(10, 50, 10, -50, 20, a, b,2);
     generateDataForCluster(10, -50, 50, -50, 30, a, b, 3);
 
-    resetClassifyRegion();	
+    resetClassifyRegion();
 }
 
 
@@ -303,49 +303,47 @@ function main() {
  ***********************************/
 
 function drawConnections(ameans,bmeans) {
-		ctx.lineWidth="0.3";
-		for(var i = 0 ; i < ameans.length; i++) {
-				ctx.strokeStyle=clusterColor[i];
-				drawLine(ameans[i][0], ameans[i][1],
-								 bmeans[i][0], bmeans[i][1]);
-		}
+    ctx.lineWidth="0.3";
+    for(var i = 0 ; i < ameans.length; i++) {
+	ctx.strokeStyle=clusterColor[i];
+	drawLine(ameans[i][0], ameans[i][1],
+		 bmeans[i][0], bmeans[i][1]);
+    }
 }
 
 function resetCluster() {
-		resetClassifyRegion();
+    resetClassifyRegion();
 }
 
 
 function  cluster() {
-		resetCluster();
-		
+    resetCluster();
+
     var means = initCluster(K_CLUSTER, function() {
-        return [ rng.uniform() * Math.sqrt(MAX_X),
-                 rng.uniform() * Math.sqrt(MAX_Y)];
+        return [ rng.uniform() * (MAX_X),
+                 rng.uniform() * (MAX_Y)];
     });
 
-		var ROUNDS = 10;
-		var history = [];
-		for(var rnd = 0; rnd < ROUNDS; rnd++) {				
-				history[rnd] = means;
-				var newmeans = classify(means);				
-				
-				drawConnections(means, newmeans);
+    var rounds = ROUNDS_CLUSTER;
 
-				means = newmeans;
-		}
+    var history = [];
+    for(var rnd = 0; rnd < rounds; rnd++) {
+	history[rnd] = means;
+	var newmeans = classify(means);
+        console.log(newmeans);
+	drawConnections(means, newmeans);
 
+	means = newmeans;
+    }
 
-
-		
-		var sites = [];
-		for(var i = 0; i < means.length; i++) {				
-				RADIUS = 3 ;
-				ctx.fillStyle   = clusterColor[i];
-				drawPoint(means[i][0], means[i][1] );				
-				RADIUS = 1;
-				sites[i] = {x: means[i][0], y: means[i][1] };
-		}
+    var sites = [];
+    for(var i = 0; i < means.length; i++) {
+	RADIUS = 3 ;
+	ctx.fillStyle   = clusterColor[i];
+	drawPoint(means[i][0], means[i][1] );
+	RADIUS = 1;
+	sites[i] = {x: means[i][0], y: means[i][1] };
+    }
 
 
 
@@ -354,28 +352,28 @@ function  cluster() {
 		var bbox = {xl: MIN_X, xr:  MAX_X ,
 								yt: MIN_Y, yb: MAX_Y};
 
-		var diagram = voronoi.compute(sites, bbox);		
+		var diagram = voronoi.compute(sites, bbox);
 
-		
+
 		ctx.fillStyle   = 'black';
 		ctx.strokeStyle  = 'black';
-		
+
 		diagram.edges.map(function(item) {
 				var va = item.va;
 				var vb = item.vb;
-				
+
 				drawLine(va.x, va.y, vb.x, vb.y);
 		});
 
 }
 
 function zeros(k1, k2) {
-		if(k2 == 1) {
-				return initCluster(k1, function() {return 0;});
-		}
-		else {
-				return initCluster(k1, function() {return zeros(k2,1);});
-		}
+    if(k2 == 1 || k2 == undefined) {
+	return initCluster(k1, function() {return 0;});
+    }
+    else {
+	return initCluster(k1, function() {return zeros(k2,1);});
+    }
 }
 
 function initCluster(k, fn) {
@@ -388,27 +386,27 @@ function initCluster(k, fn) {
 
 function classify(means) {
     var acc = zeros(means.length, 2);
-		var cnt = zeros(means.length);
+    var cnt = zeros(means.length);
 
-		for(var i = 0; i < data.length; i++) {
-				for(var j = 0; j < data[i].length; j++) {
-						var c = nearestNeighbour(means, data[i][j]);
-						
-						acc[c] = add( acc[c], data[i][j] );
-						cnt[c] = cnt[c] + 1;
-						
-				}				
-		}
+    for(var i = 0; i < data.length; i++) {
+	for(var j = 0; j < data[i].length; j++) {
+	    var c = nearestNeighbour(means, data[i][j]);
 
-		for(var i = 0; i < acc.length; i++ ) {
-				if(cnt[i] == 0) {
-						acc[i] = add(means[i], zeros(means[i].length));
-				}
-				else {
-						acc[i] = mult(1.0 / cnt[i] , acc[i] );
-				}
-		}		
-		return acc;
+	    acc[c] = add( acc[c], data[i][j] );
+	    cnt[c] = cnt[c] + 1;
+
+	}
+    }
+
+    for(var i = 0; i < acc.length; i++ ) {
+	if(cnt[i] == 0) {
+	    acc[i] = add(means[i], zeros(means[i].length));
+	}
+	else {
+	    acc[i] = mult(1.0 / cnt[i] , acc[i] );
+	}
+    }
+    return acc;
 }
 
 function add(vec1, vec2) {
@@ -416,47 +414,47 @@ function add(vec1, vec2) {
 }
 
 function mult(scalar, vec1) {
-		return elementwise(vec1, Array(vec1.length), 
-											 function(a,b) { return a * scalar;});
+    return elementwise(vec1, Array(vec1.length),
+		       function(a,b) { return a * scalar;});
 }
 
 function sub(vec1, vec2) {
-		return elementwise(vec1,vec2, function(a,b) { return a-b;});
+    return elementwise(vec1,vec2, function(a,b) { return a-b;});
 }
 
 
 function dist(vec1, vec2) {
-		return norm2( sub(vec1, vec2) );
+    return norm2( sub(vec1, vec2) );
 }
 
 function norm2(vec) {
-		var s = 0;
-		for(var i = 0; i < vec.length; i++) {
-				s += vec[i] * vec[i]; 
-		}
-		return Math.sqrt(s);
+    var s = 0;
+    for(var i = 0; i < vec.length; i++) {
+	s += vec[i] * vec[i];
+    }
+    return Math.sqrt(s);
 }
 
 function elementwise(vec1, vec2, fn) {
-		var t = Array(vec1.length);
-		for(var i = 0; i < vec1.length; i++) {
-				t[i] = fn(vec1[i],  vec2[i]);
-		}		
-		return t;
+    var t = Array(vec1.length);
+    for(var i = 0; i < vec1.length; i++) {
+	t[i] = fn(vec1[i],  vec2[i]);
+    }
+    return t;
 }
 
 
 function nearestNeighbour(means, data) {
-		var min_mean = -1;
-		var min_dist = dist([-100, -100], [100,100]) + 1;
+    var min_mean = -1;
+    var min_dist = dist([-100, -100], [100,100]) + 1;
 
-		for(var i = 0 ; i < means.length; i++ ){
-				var d = dist(means[i], data);
-				
-				if(d < min_dist) {
-						min_dist = d;
-						min_mean = i;
-				}
-		}	
-		return min_mean;
+    for(var i = 0 ; i < means.length; i++ ){
+	var d = dist(means[i], data);
+
+	if(d < min_dist) {
+	    min_dist = d;
+	    min_mean = i;
+	}
+    }
+    return min_mean;
 }
