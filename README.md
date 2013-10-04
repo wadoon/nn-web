@@ -5,9 +5,10 @@ nn-web
     Date: 2013-09-27
     License: gpl-v3
 
-A simple webpage for visualizing of k-Means Clustering (aka Isodata) and k-Nearest-Neighbour Classificator. [You can see it here](http://areku.github.io/nn-web/)
+A simple webpage for visualizing of k-Means Clustering (aka Isodata) and k-Nearest-Neighbour Classificator. You can see it here:
 
-
+    * [cc.html](http://areku.github.io/nn-web/cc.html)
+    * [mlp.html](http://areku.github.io/nn-web/mlp.html)
 
 ## Included libraries
 
