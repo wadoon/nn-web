@@ -16,3 +16,7 @@ A simple webpage for visualizing of k-Means Clustering (aka Isodata) and k-Neare
 
 *rhill-voronoi-core.min.js* for visualizing the cluster from the k-means clustering, see
 https://github.com/gorhill/Javascript-Voronoi (MIT License)
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/areku/nn-web/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
